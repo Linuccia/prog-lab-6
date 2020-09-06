@@ -1,6 +1,6 @@
 package Commands;
 
-import ServerManager.CollectionManager;
+import ProgramManager.CollectionManager;
 
 public class RemoveGreater extends AbsCommand {
     public RemoveGreater(CollectionManager manager) {

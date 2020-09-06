@@ -1,7 +1,7 @@
 package Commands;
 
-import ServerDataClasses.Product;
-import ServerManager.CollectionManager;
+import DataClasses.Product;
+import ProgramManager.CollectionManager;
 
 public class UpdateId extends AbsCommand {
     public UpdateId(CollectionManager manager) {

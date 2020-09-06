@@ -1,4 +1,4 @@
-package ClientDataClasses;
+package DataClasses;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,6 +24,10 @@ public class Product implements Comparable<Product>, Serializable {
         this.manufactureCost = manufactureCost;
         this.unitOfMeasure = unitOfMeasure;
         this.owner = owner;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public Integer getId(){return  id;}

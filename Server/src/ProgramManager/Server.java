@@ -1,4 +1,4 @@
-package ServerManager;
+package ProgramManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,4 +25,5 @@ public class Server {
             System.out.println("Выход из программы...");
         }
     }
+
 }

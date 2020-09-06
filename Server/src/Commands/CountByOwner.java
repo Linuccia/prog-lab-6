@@ -1,8 +1,8 @@
 package Commands;
 
-import ServerDataClasses.Person;
-import ServerDataClasses.Product;
-import ServerManager.CollectionManager;
+import DataClasses.Person;
+import DataClasses.Product;
+import ProgramManager.CollectionManager;
 
 import java.util.stream.Stream;
 

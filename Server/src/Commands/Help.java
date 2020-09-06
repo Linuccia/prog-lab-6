@@ -1,6 +1,6 @@
 package Commands;
 
-import ServerManager.CollectionManager;
+import ProgramManager.CollectionManager;
 
 public class Help extends AbsCommand {
     public Help(CollectionManager manager){

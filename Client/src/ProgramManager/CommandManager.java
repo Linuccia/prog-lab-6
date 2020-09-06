@@ -1,6 +1,6 @@
-package ClientManager;
+package ProgramManager;
 
-import ClientDataClasses.*;
+import DataClasses.*;
 
 import java.io.*;
 import java.net.Socket;

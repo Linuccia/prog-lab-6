@@ -1,7 +1,7 @@
-package ClientManager;
+package ProgramManager;
 
-import ClientDataClasses.Person;
-import ClientDataClasses.Product;
+import DataClasses.Person;
+import DataClasses.Product;
 
 import java.io.Serializable;
 
@@ -13,7 +13,6 @@ public class SerCommand implements Serializable {
     Product product;
     Person person;
     String command;
-    String args;
     Integer arg;
 
     public SerCommand(String command){
@@ -42,7 +41,6 @@ public class SerCommand implements Serializable {
     }
 
     public String getCommand(){return command;}
-    public String getArgs(){return args;}
     public Product getProduct(){return product;}
     public Person getPerson(){return person;}
     public Integer getArg(){return arg;}

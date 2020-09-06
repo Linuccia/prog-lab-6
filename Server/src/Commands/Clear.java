@@ -1,6 +1,6 @@
 package Commands;
 
-import ServerManager.CollectionManager;
+import ProgramManager.CollectionManager;
 
 public class Clear extends AbsCommand {
     public Clear(CollectionManager manager){

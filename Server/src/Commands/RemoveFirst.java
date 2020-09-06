@@ -1,6 +1,6 @@
 package Commands;
 
-import ServerManager.CollectionManager;
+import ProgramManager.CollectionManager;
 
 public class RemoveFirst extends AbsCommand {
     public RemoveFirst(CollectionManager manager) {

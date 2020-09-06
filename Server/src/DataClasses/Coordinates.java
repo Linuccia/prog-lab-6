@@ -1,4 +1,4 @@
-package ServerDataClasses;
+package DataClasses;
 
 import java.io.Serializable;
 

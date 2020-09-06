@@ -1,7 +1,7 @@
-package ServerManager;
+package ProgramManager;
 
 import Commands.*;
-import ServerDataClasses.Product;
+import DataClasses.Product;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;

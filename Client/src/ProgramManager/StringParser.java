@@ -1,4 +1,4 @@
-package ClientManager;
+package ProgramManager;
 
 import java.util.Scanner;
 

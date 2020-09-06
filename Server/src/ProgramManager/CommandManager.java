@@ -1,4 +1,4 @@
-package ServerManager;
+package ProgramManager;
 
 import Commands.AbsCommand;
 
@@ -63,7 +63,7 @@ public class CommandManager {
             }
             break;
             case "count_by_owner": {
-                toClient.writeObject(commandMap.get(command.getCommand()).execute(command.getOwner()));
+                toClient.writeObject(commandMap.get(command.getCommand()).execute(command.getPerson()));
             }
             case "add":
             case "add_if_min": {

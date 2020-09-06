@@ -1,7 +1,7 @@
 package Commands;
 
-import ServerDataClasses.Product;
-import ServerManager.CollectionManager;
+import DataClasses.Product;
+import ProgramManager.CollectionManager;
 import com.google.gson.Gson;
 
 import java.util.stream.Collectors;

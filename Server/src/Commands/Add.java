@@ -1,7 +1,7 @@
 package Commands;
 
-import ServerDataClasses.Product;
-import ServerManager.CollectionManager;
+import DataClasses.Product;
+import ProgramManager.CollectionManager;
 
 public class Add extends AbsCommand {
     public Add(CollectionManager manager){

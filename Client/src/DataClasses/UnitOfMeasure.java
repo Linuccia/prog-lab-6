@@ -1,4 +1,4 @@
-package ClientDataClasses;
+package DataClasses;
 
 import java.io.Serializable;
 
