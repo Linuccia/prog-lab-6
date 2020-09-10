@@ -49,7 +49,7 @@ public class Connection {
                     }
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Введенный порт не является числом или выходит за пределы int. Повторите ввод");
+                System.out.println("Введенный порт не является числом или выходит за пределы int");
             }
         }
     }
