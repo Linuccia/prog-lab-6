@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-
+/**
+ * @author Stephanskaya P.A.
+ */
 public class Server {
     public static void main(String[] args) throws IOException {
         CollectionManager manager = new CollectionManager();

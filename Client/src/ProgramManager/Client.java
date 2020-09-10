@@ -2,7 +2,9 @@ package ProgramManager;
 
 import java.util.NoSuchElementException;
 
-
+/**
+ * @author Stephanskaya P.A.
+ */
 public class Client {
     public static void main(String[] args){
         try {
