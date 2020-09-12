@@ -33,6 +33,8 @@ public class Connection {
                     System.out.println("Введенный хост недоступен");
                 } catch (SocketTimeoutException e) {
                     System.out.println("Время подключения к серверу вышло");
+                }catch (SocketException e){
+                    System.out.println("Соединение с сервером разорвано");
                 } catch (IOException e){
                     System.out.println("Не удалось подключиться к серверу. Повторить попытку подключения?(Введите да или нет)");
                     String answer;

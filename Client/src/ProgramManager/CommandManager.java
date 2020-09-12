@@ -91,7 +91,7 @@ public class CommandManager {
                 switch (ComAndArgs[0]){
                     case "remove_by_id":
                     case "remove_greater":
-                    case "count_less_then_price":
+                    case "count_less_than_price":
                         try{
                             SerCommand send = new SerCommand(ComAndArgs[0], Integer.parseInt(ComAndArgs[1]));
                             sendCom(socket, send);
