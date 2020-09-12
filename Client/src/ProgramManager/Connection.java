@@ -23,7 +23,9 @@ public class Connection {
                     socket.connect(new InetSocketAddress(host, port), 2000);
                     System.out.println("Соединение с сервером установлено!");
                     while (true){
-                        manager.exchange(socket);
+                        String command;
+                        command = scan.nextLine();
+                        manager.exchange(socket, command);
                     }
                 } catch (IllegalArgumentException e){
                     System.out.println("Порт должен принимать значения от 1 до 65535");

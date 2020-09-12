@@ -52,10 +52,7 @@ public class CommandManager {
      *
      * @param socket
      */
-    public void exchange(Socket socket){
-        Scanner scan = new Scanner(System.in);
-        String command;
-        command = scan.nextLine();
+    public void exchange(Socket socket, String command){
         String[] ComAndArgs = command.trim().split(" ");
         try{
             if (ComAndArgs.length == 1){
@@ -125,7 +122,7 @@ public class CommandManager {
                                 commandReader = new BufferedReader(new FileReader(file));
                                 String line = commandReader.readLine();
                                 while (line != null) {
-                                    exchange(socket);
+                                    exchange(socket, line);
                                     System.out.println();
                                     line = commandReader.readLine();
                                 }
@@ -207,7 +204,7 @@ public class CommandManager {
      *
      * @return
      */
-    public Product addProduct(){
+    public Product addProduct() {
         Scanner scanner = new Scanner(System.in);
         Product product;
         UnitOfMeasure unitOfMeasure = null;
@@ -215,111 +212,137 @@ public class CommandManager {
         Country nationality = null;
         StringParser pars = new StringParser();
 
-        String name = pars.strParse("название продукта");
-
-        String strX;
-        int x = 858;
-        do {
+        if (script) {
             try {
-                System.out.println("Введите значение поля координата x (значение должно быть меньше или равно 857)");
-                strX = scanner.nextLine().trim();
-                x = Integer.parseInt(strX);
-                if (x >= 858) {
-                    System.out.println("Значение не может быть больше 857. Повторите ввод");
+                String[] addParam = new String[11];
+                for (int i = 0; i < addParam.length; i++) {
+                    addParam[i] = commandReader.readLine();
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Введенное значение не является целым числом или выходит за пределы int. Повторите ввод");
+                String name = pars.strParse(addParam[0]);
+                int x = pars.intParse(addParam[1]);
+                Double y = pars.dblParse(addParam[2]);
+                Integer price = pars.intParse(addParam[3]);
+                String partNumber = pars.strParse(addParam[4]);
+                Long manufactureCost = Long.parseLong(addParam[5]);
+                unitOfMeasure = UnitOfMeasure.valueOf(addParam[6]);
+                String perName = pars.strParse(addParam[7]);
+                Double weight = pars.dblParse(addParam[8]);
+                eyeColor = Color.valueOf(addParam[9]);
+                nationality = Country.valueOf(addParam[10]);
+                Integer id = 0;
+                product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure,
+                        new Person(perName, weight, eyeColor, nationality));
+            } catch (Exception e) {
+                return null;
             }
-        } while (x >= 858);
+        } else {
 
-        Double y = pars.dblParse("координата y");
+            String name = pars.strParse("название продукта");
 
-        Integer price;
-        do {
-            price = pars.intParse("цена");
-            if (price <= 0) {
-                System.out.println("Цена не может быть меньше или равна 0");
-            }
-        } while (price <= 0);
-
-        int length;
-        String partNumber;
-        do {
-            partNumber = pars.strParse("номер партии");
-            length = partNumber.length();
-            if ((length > 85) || (length <15 )) {
-                System.out.println("Номер партии не может быть длиннее 85 или короче 15. Повторите ввод");
-            }
-        } while ((length > 85) || (length < 15));
-
-        String strManufactureCost;
-        Long manufactureCost = null;
-        do {
-            try {
-                System.out.println("Введите значение поля цена изготовления");
-                strManufactureCost = scanner.nextLine().trim();
-                if (strManufactureCost.equals("")) {
-                    System.out.println("Цена изготовления не может быть null. Повторите ввод");
-                } else {
-                    manufactureCost = Long.parseLong(strManufactureCost);
+            String strX;
+            int x = 858;
+            do {
+                try {
+                    System.out.println("Введите значение поля координата x (значение должно быть меньше или равно 857)");
+                    strX = scanner.nextLine().trim();
+                    x = Integer.parseInt(strX);
+                    if (x >= 858) {
+                        System.out.println("Значение не может быть больше 857. Повторите ввод");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Введенное значение не является целым числом или выходит за пределы int. Повторите ввод");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Введенное значение не является или выходит за пределы long. Повторите ввод");
-            }
-        } while (manufactureCost == null);
+            } while (x >= 858);
 
-        String strUnitOfMeasure;
-        do {
-            System.out.println("Введите одну из единиц измерения: " + Arrays.toString(UnitOfMeasure.values()));
-            strUnitOfMeasure = scanner.nextLine().trim().toUpperCase();
-            try {
-                unitOfMeasure = UnitOfMeasure.valueOf(strUnitOfMeasure);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Данной единицы измерения не существует. Повторите ввод");
-            } catch (NullPointerException e) {
-                System.out.println("Единица измерения не может быть null. Повторите ввод");
-            }
-        } while (unitOfMeasure == null);
+            Double y = pars.dblParse("координата y");
 
-        String personName = pars.strParse("имя владельца");
+            Integer price;
+            do {
+                price = pars.intParse("цена");
+                if (price <= 0) {
+                    System.out.println("Цена не может быть меньше или равна 0");
+                }
+            } while (price <= 0);
 
-        Double weight;
+            int length;
+            String partNumber;
+            do {
+                partNumber = pars.strParse("номер партии");
+                length = partNumber.length();
+                if ((length > 85) || (length < 15)) {
+                    System.out.println("Номер партии не может быть длиннее 85 или короче 15. Повторите ввод");
+                }
+            } while ((length > 85) || (length < 15));
 
-        do {
-            weight = pars.dblParse("вес");
-        } while (weight <= 0);
+            String strManufactureCost;
+            Long manufactureCost = null;
+            do {
+                try {
+                    System.out.println("Введите значение поля цена изготовления");
+                    strManufactureCost = scanner.nextLine().trim();
+                    if (strManufactureCost.equals("")) {
+                        System.out.println("Цена изготовления не может быть null. Повторите ввод");
+                    } else {
+                        manufactureCost = Long.parseLong(strManufactureCost);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Введенное значение не является или выходит за пределы long. Повторите ввод");
+                }
+            } while (manufactureCost == null);
 
-        String strEyeColor;
-        do {
-            System.out.println("Введите один из цветов глаз: " + Arrays.toString(Color.values()));
-            strEyeColor = scanner.nextLine().trim().toUpperCase();
-            try {
-                eyeColor = Color.valueOf(strEyeColor);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Данного цвета не существует. Повторите ввод");
-            } catch (NullPointerException e) {
-                System.out.println("Цвет не может быть null. Повторите ввод");
-            }
-        } while (eyeColor == null);
+            String strUnitOfMeasure;
+            do {
+                System.out.println("Введите одну из единиц измерения: " + Arrays.toString(UnitOfMeasure.values()));
+                strUnitOfMeasure = scanner.nextLine().trim().toUpperCase();
+                try {
+                    unitOfMeasure = UnitOfMeasure.valueOf(strUnitOfMeasure);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Данной единицы измерения не существует. Повторите ввод");
+                } catch (NullPointerException e) {
+                    System.out.println("Единица измерения не может быть null. Повторите ввод");
+                }
+            } while (unitOfMeasure == null);
 
-        String strNationality;
-        do {
-            System.out.println("Введите одну из стран: " + Arrays.toString(Country.values()));
-            strNationality = scanner.nextLine().trim().toUpperCase();
-            try {
-                nationality = Country.valueOf(strNationality);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Данной страны не существует. Повторите ввод");
-            } catch (NullPointerException e) {
-                System.out.println("Страна не может быть null. Повторите ввод");
-            }
-        } while (nationality == null);
+            String personName = pars.strParse("имя владельца");
 
-        Integer id = 1;
+            Double weight;
 
-        product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure, new Person(personName, weight, eyeColor, nationality));
+            do {
+                weight = pars.dblParse("вес");
+            } while (weight <= 0);
 
-        return product;
+            String strEyeColor;
+            do {
+                System.out.println("Введите один из цветов глаз: " + Arrays.toString(Color.values()));
+                strEyeColor = scanner.nextLine().trim().toUpperCase();
+                try {
+                    eyeColor = Color.valueOf(strEyeColor);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Данного цвета не существует. Повторите ввод");
+                } catch (NullPointerException e) {
+                    System.out.println("Цвет не может быть null. Повторите ввод");
+                }
+            } while (eyeColor == null);
+
+            String strNationality;
+            do {
+                System.out.println("Введите одну из стран: " + Arrays.toString(Country.values()));
+                strNationality = scanner.nextLine().trim().toUpperCase();
+                try {
+                    nationality = Country.valueOf(strNationality);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Данной страны не существует. Повторите ввод");
+                } catch (NullPointerException e) {
+                    System.out.println("Страна не может быть null. Повторите ввод");
+                }
+            } while (nationality == null);
+
+            Integer id = 1;
+
+            product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure, new Person(personName, weight, eyeColor, nationality));
+        }
+            return product;
+
     }
 
 }
