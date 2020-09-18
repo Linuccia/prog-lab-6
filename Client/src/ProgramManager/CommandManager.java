@@ -4,6 +4,7 @@ import DataClasses.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -52,12 +53,12 @@ public class CommandManager {
      *
      * @param socket
      */
-    public void exchange(Socket socket, String command){
+    public void exchange(Socket socket, String command) throws IOException{
         String[] ComAndArgs = command.trim().split(" ");
         try{
             if (ComAndArgs.length == 1){
                 switch (ComAndArgs[0]){
-                    case " ":
+                    case "":
                         break;
                     case "help":
                     case "info":
@@ -146,7 +147,7 @@ public class CommandManager {
                         System.out.println("Имя владельца не может быть null");
                         return;
                     } else {
-                        personName = ComAndArgs[0];
+                        personName = ComAndArgs[1];
                     }
 
                     double weight;
@@ -190,12 +191,12 @@ public class CommandManager {
                     sendCom(socket, send);
                     getAns(socket);
 
-                } else {
-                    System.out.println("Введена неизвестная команда или не введены аргументы. Повторите ввод");
                 }
+            } else {
+                System.out.println("Введена неизвестная команда или не введены аргументы. Повторите ввод");
             }
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException | ClassNotFoundException e){
+            System.out.println("Аргумент отсутствует");
         }
     }
 

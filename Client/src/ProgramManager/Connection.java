@@ -23,20 +23,17 @@ public class Connection {
                     socket.connect(new InetSocketAddress(host, port), 2000);
                     System.out.println("Соединение с сервером установлено!");
                     while (true){
-                        String command;
-                        command = scan.nextLine();
+                        String command = scan.nextLine();
                         manager.exchange(socket, command);
                     }
-                } catch (IllegalArgumentException e){
-                    System.out.println("Порт должен принимать значения от 1 до 65535");
-                } catch (UnknownHostException e){
-                    System.out.println("Введен неверный хост");
-                } catch (ConnectException e){
-                    System.out.println("Введенный хост недоступен");
                 } catch (SocketTimeoutException e) {
                     System.out.println("Время подключения к серверу вышло");
-                }catch (SocketException e){
-                    System.out.println("Соединение с сервером разорвано");
+                } catch (ConnectException e){
+                    System.out.println("Введенный порт недоступен");
+                } catch (UnknownHostException e){
+                    System.out.println("Введен неверный хост");
+                } catch (IllegalArgumentException e){
+                    System.out.println("Порт должен принимать значения от 1 до 65535");
                 } catch (IOException e){
                     System.out.println("Не удалось подключиться к серверу. Повторить попытку подключения?(Введите да или нет)");
                     String answer;

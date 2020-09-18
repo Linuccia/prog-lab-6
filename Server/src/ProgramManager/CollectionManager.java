@@ -55,7 +55,8 @@ public class CollectionManager {
                     manager.save();
                 }
             });
-            manager.load(new File(System.getenv("ProductsFile")));
+            //manager.load(new File(System.getenv("ProductsFile")));
+            manager.load(new File("Products.json"));
             connection.connect();
         } catch (NullPointerException e) {
             System.out.println("Имя файла должно быть передано через переменную окружения ProductsFile");
@@ -69,7 +70,8 @@ public class CollectionManager {
      */
     public void save() {
         try {
-            File outfile = new File(System.getenv("ProductsFile"));
+            //File outfile = new File(System.getenv("ProductsFile"));
+            File outfile = new File("Products.json");
             BufferedWriter writter = new BufferedWriter(new FileWriter(outfile));
             String outJson = json.toJson(collection);
             writter.write(outJson);

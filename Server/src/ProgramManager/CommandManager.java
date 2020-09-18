@@ -36,7 +36,7 @@ public class CommandManager {
         command = (SerCommand) serialize.readObject();
         serialize.close();
         buffer.clear();
-        System.out.println("Успешно выполнена команда " + command.getCommand());
+        System.out.println("На сервер поступила команда " + command.getCommand());
         key.interestOps(SelectionKey.OP_WRITE);
         return command;
     }
@@ -65,6 +65,7 @@ public class CommandManager {
             case "count_by_owner": {
                 toClient.writeObject(commandMap.get(command.getCommand()).execute(command.getPerson()));
             }
+            break;
             case "add":
             case "add_if_min": {
                 toClient.writeObject(commandMap.get(command.getCommand()).execute(command.getProduct()));
