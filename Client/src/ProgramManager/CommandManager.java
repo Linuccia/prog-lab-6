@@ -233,7 +233,7 @@ public class CommandManager {
                 product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure,
                         new Person(perName, weight, eyeColor, nationality));
             } catch (IllegalArgumentException | NullPointerException | IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 return null;
             }
         } else {
