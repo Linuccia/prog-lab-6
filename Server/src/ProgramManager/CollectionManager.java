@@ -55,8 +55,8 @@ public class CollectionManager {
                     manager.save();
                 }
             });
-            //manager.load(new File(System.getenv("ProductsFile")));
-            manager.load(new File("Products.json"));
+            manager.load(new File(System.getenv("ProductsFile")));
+            //manager.load(new File("Products.json"));
             connection.connect();
         } catch (NullPointerException e) {
             System.out.println("Имя файла должно быть передано через переменную окружения ProductsFile");
@@ -70,8 +70,8 @@ public class CollectionManager {
      */
     public void save() {
         try {
-            //File outfile = new File(System.getenv("ProductsFile"));
-            File outfile = new File("Products.json");
+            File outfile = new File(System.getenv("ProductsFile"));
+            //File outfile = new File("Products.json");
             BufferedWriter writter = new BufferedWriter(new FileWriter(outfile));
             String outJson = json.toJson(collection);
             writter.write(outJson);
@@ -89,124 +89,122 @@ public class CollectionManager {
      * @throws IOException
      */
     public void load(File file) throws IOException {
-        try {
-            if (!file.exists()) throw new FileNotFoundException();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Файла по указанному пути не существует");
-        }
-        try {
-            if (!file.canRead() || !file.canWrite()) throw new SecurityException();
-        } catch (SecurityException ex) {
-            System.out.println("Файл защищён от чтения и/или записи. Для работы программы нужны оба разрешения");
-        }
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            System.out.println("Файл успешно загружен");
-            StringBuilder result = new StringBuilder();
-            String nextLine;
-            while ((nextLine = reader.readLine()) != null) {
-                result.append(nextLine);
-            }
-            Type collectionQueue = new TypeToken<PriorityQueue<Product>>() {
-            }.getType();
-            Type collectionList = new TypeToken<List<Product>>() {
-            }.getType();
-            try{
-                List<Product> productList = json.fromJson(String.valueOf(result), collectionList);
-                try{
-                    for (Product p: productList) {
-                        if (p.getId() == null) {
-                            System.out.println("Id не может быть null");
-                            return;
-                        }
-                        if (p.getId() <= 0) {
-                            System.out.println("Id не может быть меньше или равен 0. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getName() == null) {
-                            System.out.println("Имя не может быть null");
-                            return;
-                        }
-                        if (p.getName().equals("")) {
-                            System.out.println("Строка имени не может быть пустой. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getCoordinates().getX() > 857) {
-                            System.out.println("Координата X не может быть больше 857. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getCoordinates().getY() == null) {
-                            System.out.println("Координата Y не может быть null");
-                            return;
-                        }
-                        if (p.getPrice() == null) {
-                            System.out.println("Цена не может быть null");
-                            return;
-                        }
-                        if (p.getPrice() <= 0) {
-                            System.out.println("Цена не может быть меньше или равна 0. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getPartNumber() == null) {
-                            System.out.println("Номер партии не может быть null");
-                            return;
-                        }
-                        if ((p.getPartNumber().length() > 85) || (p.getPartNumber().length() < 15) || (p.getPartNumber().equals(""))) {
-                            System.out.println("Строка с номером партии не может быть пустой и должна быть длиной от 15 до 85. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getManufactureCost() == null) {
-                            System.out.println("Цена производства не может быть null");
-                            return;
-                        }
-                        if (p.getUnitOfMeasure() == null) {
-                            System.out.println("Единица измерения не может быть null");
-                            return;
-                        }
-                        if (p.getOwner().getName() == null) {
-                            System.out.println("Имя владельца не может быть null");
-                            return;
-                        }
-                        if (p.getOwner().getName().equals("")) {
-                            System.out.println("Строка имени владельца не может быть пустой. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getOwner().getWeight() == null) {
-                            System.out.println("Вес владельца не может быть null");
-                            return;
-                        }
-                        if (p.getOwner().getWeight() <= 0) {
-                            System.out.println("Вес владельца не может быть меньше или равен 0. Добавлена пустая коллекция");
-                            return;
-                        }
-                        if (p.getOwner().getEyeColor() == null) {
-                            System.out.println("Цвет глаз владельца не может быть null");
-                            return;
-                        }
-                        if (p.getOwner().getNationality() == null) {
-                            System.out.println("Национальность владельца не может быть null");
-                            return;
-                        }
+        if (file.exists()) {
+            if (file.canRead() && file.canWrite()) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+                    System.out.println("Файл успешно загружен");
+                    StringBuilder result = new StringBuilder();
+                    String nextLine;
+                    while ((nextLine = reader.readLine()) != null) {
+                        result.append(nextLine);
                     }
-                    PriorityQueue<Product> priorityQueue = json.fromJson(result.toString(), collectionQueue);
-                    for (Product p: priorityQueue) {
-                        p.setCreationDate();
-                        collection.add(p);
-                        if (p.getId() > id) {
-                            id = p.getId();
+                    Type collectionQueue = new TypeToken<PriorityQueue<Product>>() {
+                    }.getType();
+                    Type collectionList = new TypeToken<List<Product>>() {
+                    }.getType();
+                    try {
+                        List<Product> productList = json.fromJson(String.valueOf(result), collectionList);
+                        try {
+                            for (Product p : productList) {
+                                if (p.getId() == null) {
+                                    System.out.println("Id не может быть null");
+                                    return;
+                                }
+                                if (p.getId() <= 0) {
+                                    System.out.println("Id не может быть меньше или равен 0. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getName() == null) {
+                                    System.out.println("Имя не может быть null");
+                                    return;
+                                }
+                                if (p.getName().equals("")) {
+                                    System.out.println("Строка имени не может быть пустой. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getCoordinates().getX() > 857) {
+                                    System.out.println("Координата X не может быть больше 857. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getCoordinates().getY() == null) {
+                                    System.out.println("Координата Y не может быть null");
+                                    return;
+                                }
+                                if (p.getPrice() == null) {
+                                    System.out.println("Цена не может быть null");
+                                    return;
+                                }
+                                if (p.getPrice() <= 0) {
+                                    System.out.println("Цена не может быть меньше или равна 0. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getPartNumber() == null) {
+                                    System.out.println("Номер партии не может быть null");
+                                    return;
+                                }
+                                if ((p.getPartNumber().length() > 85) || (p.getPartNumber().length() < 15) || (p.getPartNumber().equals(""))) {
+                                    System.out.println("Строка с номером партии не может быть пустой и должна быть длиной от 15 до 85. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getManufactureCost() == null) {
+                                    System.out.println("Цена производства не может быть null");
+                                    return;
+                                }
+                                if (p.getUnitOfMeasure() == null) {
+                                    System.out.println("Единица измерения не может быть null");
+                                    return;
+                                }
+                                if (p.getOwner().getName() == null) {
+                                    System.out.println("Имя владельца не может быть null");
+                                    return;
+                                }
+                                if (p.getOwner().getName().equals("")) {
+                                    System.out.println("Строка имени владельца не может быть пустой. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getOwner().getWeight() == null) {
+                                    System.out.println("Вес владельца не может быть null");
+                                    return;
+                                }
+                                if (p.getOwner().getWeight() <= 0) {
+                                    System.out.println("Вес владельца не может быть меньше или равен 0. Добавлена пустая коллекция");
+                                    return;
+                                }
+                                if (p.getOwner().getEyeColor() == null) {
+                                    System.out.println("Цвет глаз владельца не может быть null");
+                                    return;
+                                }
+                                if (p.getOwner().getNationality() == null) {
+                                    System.out.println("Национальность владельца не может быть null");
+                                    return;
+                                }
+                            }
+                            PriorityQueue<Product> priorityQueue = json.fromJson(result.toString(), collectionQueue);
+                            for (Product p : priorityQueue) {
+                                p.setCreationDate();
+                                collection.add(p);
+                                if (p.getId() > id) {
+                                    id = p.getId();
+                                }
+                            }
+                            System.out.println("Коллекция успешно добавлена. Коллекция содержит " + collection.size() + " элемент(а/ов)");
+                        } catch (NullPointerException e) {
+                            System.out.println("Добавлена пустая коллекция");
                         }
+                    } catch (JsonSyntaxException e) {
+                        System.out.println("Ошибка синтаксиса Json. Коллекция не добавлена");
+                        System.exit(1);
+                    }catch (NullPointerException e) {
+                        System.out.println("Загружен пустой файл");
                     }
-                    System.out.println("Коллекция успешно добавлена. Коллекция содержит " + collection.size() + " элемент(а/ов)");
-                } catch (NullPointerException e) {
-                    System.out.println("Добавлена пустая коллекция");
                 }
-            } catch (JsonSyntaxException e) {
-                System.out.println("Ошибка синтаксиса Json. Коллекция не добавлена");
+            } else {
+                System.out.println("Файл защищён от чтения и/или записи. Для работы программы нужны оба разрешения");
                 System.exit(1);
             }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("Данного файла не существует");
+            System.exit(1);
         }
     }
-
 }
