@@ -54,7 +54,8 @@ public class Connection {
                                 }
                                 iter.remove();
                             } catch (Exception e) {
-                                System.out.println("Сервер отключен");
+                                //System.out.println("Сервер отключен");
+                                e.printStackTrace();
                                 key.cancel();
                             }
                         }

@@ -4,7 +4,6 @@ import DataClasses.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -122,7 +121,7 @@ public class CommandManager {
                             try {
                                 commandReader = new BufferedReader(new FileReader(file));
                                 String line = commandReader.readLine();
-                                while (line != null) {
+                                while (line != null){
                                     exchange(socket, line);
                                     System.out.println();
                                     line = commandReader.readLine();
@@ -233,7 +232,8 @@ public class CommandManager {
                 Integer id = 0;
                 product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure,
                         new Person(perName, weight, eyeColor, nationality));
-            } catch (Exception e) {
+            } catch (IllegalArgumentException | NullPointerException | IOException e) {
+                e.printStackTrace();
                 return null;
             }
         } else {
@@ -343,7 +343,6 @@ public class CommandManager {
             product = new Product(id, name, new Coordinates(x, y), price, partNumber, manufactureCost, unitOfMeasure, new Person(personName, weight, eyeColor, nationality));
         }
             return product;
-
     }
 
 }

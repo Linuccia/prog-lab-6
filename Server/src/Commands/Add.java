@@ -16,9 +16,14 @@ public class Add extends AbsCommand {
      */
     @Override
     public String execute(Product product) {
-        Integer id = ++manager.id;
-        product.setId(id);
-        manager.getCollection().add(product);
-        return "Элемент коллекции успешно добавлен";
+        try{
+            Integer id = ++manager.id;
+            product.setId(id);
+            manager.getCollection().add(product);
+            return "Элемент коллекции успешно добавлен";
+        } catch (NullPointerException e){
+            return "Ошибка в агрументах для команды add";
+        }
+
     }
 }

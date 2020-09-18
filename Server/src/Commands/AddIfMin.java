@@ -22,13 +22,17 @@ public class AddIfMin extends AbsCommand {
         if (!(manager.getCollection().size() == 0)) {
             Stream<Product> stream = manager.getCollection().stream();
             Integer minPrice = stream.filter(collection -> collection.getPrice() != null).min(Comparator.comparingInt(p -> p.getPrice())).get().getPrice();
-            if (product.getPrice()>=minPrice) {
-                return "Цена элемента выше, чем минимальная цена элементов коллекции. Элемент не сохранен";
-            } else {
-                Integer id = ++manager.id;
-                product.setId(id);
-                manager.getCollection().add(product);
-                return "Элемент сохранен в коллекцию";
+            try{
+                if (product.getPrice()>=minPrice) {
+                    return "Цена элемента выше, чем минимальная цена элементов коллекции. Элемент не сохранен";
+                } else {
+                    Integer id = ++manager.id;
+                    product.setId(id);
+                    manager.getCollection().add(product);
+                    return "Элемент сохранен в коллекцию";
+                }
+            } catch (NullPointerException e){
+                return "Ошибка в аргументах для команды add_if_min";
             }
         } else {
             return "Коллекция пуста";
