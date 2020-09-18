@@ -219,15 +219,15 @@ public class CommandManager {
                 for (int i = 0; i < addParam.length; i++) {
                     addParam[i] = commandReader.readLine();
                 }
-                String name = pars.strParse(addParam[0]);
-                int x = pars.intParse(addParam[1]);
-                Double y = pars.dblParse(addParam[2]);
-                Integer price = pars.intParse(addParam[3]);
-                String partNumber = pars.strParse(addParam[4]);
+                String name = addParam[0];
+                int x = Integer.parseInt(addParam[1]);
+                Double y = Double.parseDouble(addParam[2]);
+                Integer price = Integer.parseInt(addParam[3]);
+                String partNumber = addParam[4];
                 Long manufactureCost = Long.parseLong(addParam[5]);
                 unitOfMeasure = UnitOfMeasure.valueOf(addParam[6]);
-                String perName = pars.strParse(addParam[7]);
-                Double weight = pars.dblParse(addParam[8]);
+                String perName = addParam[7];
+                Double weight = Double.parseDouble(addParam[8]);
                 eyeColor = Color.valueOf(addParam[9]);
                 nationality = Country.valueOf(addParam[10]);
                 Integer id = 0;
